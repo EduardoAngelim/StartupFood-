@@ -11,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using StartupFood.Business.Interfaces;
+using StartupFood.Business.Services;
+using StartupFood.Repository.Interfaces;
 
 namespace StartupFood.API
 {
@@ -27,9 +30,10 @@ namespace StartupFood.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            //services.AddMvc();
             services.AddCors();
+            services.AddScoped<IMainService, MainService>();
+            services.AddScoped<IIngredienteRepository, Repository.Repositories.IngredienteRepository>();
+            services.AddScoped<ILancheRepository, Repository.Repositories.LancheRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,9 +45,7 @@ namespace StartupFood.API
             }
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
-            //app.UseMvc();
-
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();

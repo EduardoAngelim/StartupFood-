@@ -1,0 +1,23 @@
+<p>
+  Lanches
+</p>
+<div *ngFor="let lanche of lanches">
+  Tema: {{lanche.nome}}
+  <br>
+  Ingredientes: 
+  <div *ngFor="let ingrediente of lanche.ingredientes">
+    {{ingrediente.nome}}
+  </div>
+  <hr>
+</div>
+
+<p>
+  Ingredientes adicionais
+</p>
+
+<div *ngFor="let ingrediente of ingredientes">
+  Tema: {{ingrediente.nome}}
+  <br>
+  Valor: {{ingrediente.valor}} 
+  <hr>
+</div>
