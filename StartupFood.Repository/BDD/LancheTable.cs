@@ -37,7 +37,7 @@ namespace StartupFood.Repository.BDD
             xEggBacon.Add(HamburgerCarne);
             xEggBacon.Add(Queijo);
 
-            var Lanches = new Models.Lanche[] {
+            var Lanches = new Lanche[] {
                     new Lanche{
                         Id = 1,
                         Nome = "X-Bacon",

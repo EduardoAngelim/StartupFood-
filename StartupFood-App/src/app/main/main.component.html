@@ -1,23 +1,56 @@
-<p>
-  Lanches
-</p>
-<div *ngFor="let lanche of lanches">
-  Tema: {{lanche.nome}}
-  <br>
-  Ingredientes: 
-  <div *ngFor="let ingrediente of lanche.ingredientes">
-    {{ingrediente.nome}}
-  </div>
-  <hr>
-</div>
+<div class="row mt-5">
+  <aw-wizard class="w-100">
+    <aw-wizard-step class="mt-5" stepTitle="Escolha uma opção">
+      <div class="mb-5">
+        <div *ngFor="let lanche of lanches">
+          <div class="custom-control custom-radio text-left ml-5">
+            <input type="radio" class="custom-control-input" id="lanche-{{lanche.id}}" name="opcao_lanche" (click)="calcularPrecoLanche(false, lanche.ingredientes); buttonNextDisabled = false; pedido.nome = lanche.nome">
+            <label class="custom-control-label font-weight-bold" for="lanche-{{lanche.id}}">{{lanche.nome}}</label>
+            <br>
+            <label class="small" *ngFor="let ingrediente of lanche.ingredientes">{{ingrediente.nome}}, &nbsp;</label>
+          </div>
+        </div>
+  
+        <div class="custom-control custom-radio text-left ml-5">
+          <input type="radio" class="custom-control-input" id="montar-lanche" name="opcao_lanche" (click)="calcularPrecoLanche(true, null); buttonNextDisabled = false; pedido.nome = 'Lanche customizado'">
+          <label class="custom-control-label font-weight-bold" for="montar-lanche">Montar lanche</label>
+          <br>
+          <label class="small">Selecione os ingredientes na próxima estapa</label>
+        </div>
+      </div>
+      
+      <button class="btn btn-primary" type="button" [disabled]="buttonNextDisabled" awNextStep>Próximo</button>
+    </aw-wizard-step>
+    <aw-wizard-step class="mt-5" stepTitle="Ingredientes" awOptionalStep>
+      <div class="mb-5">
+        <div *ngFor="let ingrediente of ingredientes; let index = index;">
+          <div class="custom-control custom-checkbox text-left ml-5 mb-3">
+            <input type="checkbox" class="custom-control-input" id="ingrediente-{{ingrediente.id}}" name="ingrediente-{{ingrediente.id}}" (click)="calcularPrecoIngredientes($event.target.checked, ingrediente.valor); pedido.ingredientes = pedido.ingredientes + ingrediente.nome + ', '">
+            <label class="custom-control-label font-weight-bold" for="ingrediente-{{ingrediente.id}}">{{ingrediente.nome}}</label>
+            <br>
+            <label class="small">Acréscimo de R${{ingrediente.valor.toFixed(2)}}</label>
+          </div>
+        </div>
+      </div>
+              
+      <button class="btn btn-primary mr-3" type="button" awPreviousStep>Voltar</button>
+      <button class="btn btn-primary" type="button" awNextStep>Próximo</button>
+    </aw-wizard-step>
+    <aw-wizard-step class="mt-5 text-left" stepTitle="Finalize seu pedido">
+      
+      <h2>Seu pedido</h2>
 
-<p>
-  Ingredientes adicionais
-</p>
+      <ul>
+        <li>Lanche: {{pedido.nome}}</li>
+        <li>Ingredientes: {{pedido.ingredientes}}</li>
+        <li>Valor: R${{pedido.valor.toFixed(2)}}</li>
+      </ul>
+      
+      <button class="btn btn-primary mr-3" type="button" awPreviousStep>Voltar</button>
+      <button class="btn btn-primary mr-3" type="button" (click)="finalizarPedido()">Finalizar peido</button>
+      <button class="btn btn-danger" type="button">Cancelar pedido</button>
+    </aw-wizard-step>
+  </aw-wizard>
 
-<div *ngFor="let ingrediente of ingredientes">
-  Tema: {{ingrediente.nome}}
-  <br>
-  Valor: {{ingrediente.valor}} 
-  <hr>
+  
 </div>

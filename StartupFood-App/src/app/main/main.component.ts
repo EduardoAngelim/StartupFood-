@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ValueTransformer } from '@angular/compiler/src/util';
+import { ConditionalExpr } from '@angular/compiler';
 
 @Component({
   selector: 'app-main',
@@ -8,14 +10,22 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MainComponent implements OnInit {
 
+  buttonNextDisabled: boolean;
+  ingredientesTemp: any;
   lanches: any;
   ingredientes: any;
+  pedido: any = {
+    nome: '',
+    valor: 0,
+    ingredientes: ''
+  };
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.getLanches();
     this.getIngredientes();
+    this.buttonNextDisabled = true;
   }
 
   getLanches() {
@@ -34,4 +44,30 @@ export class MainComponent implements OnInit {
     });
   }
 
+  finalizarPedido() {
+  }
+
+  calcularPrecoLanche(lancheCustomizado: boolean, ingredientes: any) {
+    if (!lancheCustomizado) {
+        this.ingredientesTemp = ingredientes;
+
+        ingredientes.forEach(element => {
+          this.pedido.valor += element.valor;
+        });
+    } else {
+      if (this.ingredientesTemp) {
+        this.ingredientesTemp.forEach(element => {
+          this.pedido.valor -= element.valor;
+        });
+      }
+    }
+  }
+
+  calcularPrecoIngredientes(isChecked: any, valor: number) {
+    if (isChecked) {
+      this.pedido.valor += valor;
+    } else {
+      this.pedido.valor -= valor;
+    }
+  }
 }
