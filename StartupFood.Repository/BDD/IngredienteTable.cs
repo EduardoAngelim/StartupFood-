@@ -15,27 +15,32 @@ namespace StartupFood.Repository.BDD
                     new Ingrediente{
                         Id = 1,
                         Nome = "Alface",
-                        Valor = 0.4m
+                        Valor = 0.4m,
+                        Quantidade = 0
                     },
                     new Ingrediente{
                         Id = 2,
                         Nome = "Bacon",
-                        Valor = 2.0m
+                        Valor = 2.0m,
+                        Quantidade = 0
                     },
                     new Ingrediente{
                         Id = 3,
                         Nome = "Hambúrguer de carne",
-                        Valor = 3.0m
+                        Valor = 3.0m,
+                        Quantidade = 0
                     },
                     new Ingrediente{
                         Id = 4,
                         Nome = "Ovo",
-                        Valor = 0.8m
+                        Valor = 0.8m,
+                        Quantidade = 0
                     },
                     new Ingrediente{
                         Id = 5,
                         Nome = "Queijo",
-                        Valor = 1.50m
+                        Valor = 1.50m,
+                        Quantidade = 0
                     }
                 };
 
