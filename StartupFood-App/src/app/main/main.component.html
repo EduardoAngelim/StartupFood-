@@ -20,13 +20,13 @@
           <div class="mb-3">
             <label class="font-weight-bold">{{ingrediente.nome}}</label><br>
             <label class="small">Acréscimo de R${{ingrediente.valor.toFixed(2)}}</label>
-            <input id="quantidade-ingrediente-{{ingrediente.id}}" style="width: 70px" class="form-control" min="0" max="10" [(ngModel)]="ingrediente.quantidade" type="number" />
+            <input id="quantidade-ingrediente-{{ingrediente.id}}" style="width: 70px" class="form-control" min="0" max="10" (change)="checkIngredientes()" [(ngModel)]="ingrediente.quantidade" type="number" />
           </div>
         </div>
       </div>
               
       <button class="btn btn-primary mr-3" type="button" awPreviousStep>Voltar</button>
-      <button class="btn btn-primary" type="button" (click)="calcularPrecoIngredientes()" awNextStep>Próximo</button>
+      <button class="btn btn-primary" type="button" (click)="calcularPrecoIngredientes()" [disabled]="secondStepButtonNextDisabled" awNextStep>Próximo</button>
     </aw-wizard-step>
     <aw-wizard-step class="mt-5 text-left" stepTitle="Finalize seu pedido">
       
@@ -34,8 +34,16 @@
 
       <ul>
         <li>Lanche: {{pedido.lanche.nome}}</li>
-        <li>Ingredientes padrão: {{pedido.lanche.ingredientes}}</li>
-        <li>Ingredientes adicionais: {{pedido.ingredientes}}</li>
+        <li *ngIf="pedido.lanche.ingredientes">Ingredientes padrão: 
+          <div *ngFor="let ingredienteLanche of pedido.lanche.ingredientes">
+            {{ingredienteLanche.nome}} <br>
+          </div>
+        </li>
+        <li *ngIf="pedido.ingredientes">Ingredientes adicionais:
+          <div *ngFor="let ingredienteAdicional of pedido.ingredientes">
+            {{ingredienteAdicional.nome}}
+          </div>
+          </li>
         <li>Valor: R${{pedido.valorTotal.toFixed(2)}}</li>
       </ul>
       

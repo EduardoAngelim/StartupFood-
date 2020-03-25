@@ -16,6 +16,7 @@ import { Pedido } from '../models/Pedido';
 export class MainComponent implements OnInit {
 
   firstStepButtonNextDisabled: boolean;
+  secondStepButtonNextDisabled: boolean;
   ingredientesTemp: any;
   lanches: Lanche[];
   ingredientes: Ingrediente[];
@@ -49,13 +50,13 @@ export class MainComponent implements OnInit {
   }
 
   calcularPrecoLanche(lanche: Lanche) {
+
+    this.pedido.lanche = lanche;
+    this.pedido.ingredientes = lanche.ingredientes;
+    this.ingredientesTemp = lanche.ingredientes;
+    this.pedido.valorLanche = 0;
+
     if (!lanche.nome.includes('Lanche customizado')) {
-
-        this.pedido.lanche = lanche;
-        this.ingredientesTemp = lanche.ingredientes;
-        this.pedido.ingredientes = lanche.ingredientes;
-        this.pedido.valorLanche = 0;
-
         lanche.ingredientes.forEach(ingrediente => {
           ingrediente.quantidade++;
           this.pedido.valorLanche += ingrediente.valor;
@@ -69,6 +70,12 @@ export class MainComponent implements OnInit {
     }
 
     this.firstStepButtonNextDisabled = false;
+    
+    if (this.pedido.lanche.nome.includes('Lanche customizado') && !this.pedido.ingredientes) {
+      this.secondStepButtonNextDisabled = true;
+    } else {
+      this.secondStepButtonNextDisabled = false;
+    }
   }
 
   calcularPrecoIngredientes() {
@@ -82,6 +89,22 @@ export class MainComponent implements OnInit {
     this.pedido.valorTotal = this.pedido.valorLanche + this.pedido.valorIngredientes;
 
     this.verificarPromocao();
+  }
+
+  checkIngredientes() {
+
+    let flag = false;
+
+    this.ingredientes.forEach(ingrediente => {
+      if (ingrediente.quantidade > 0) {
+        this.secondStepButtonNextDisabled = false;
+        flag = true;
+      }
+    });
+
+    if (!flag) {
+      this.secondStepButtonNextDisabled = true;
+    }
   }
 
   verificarPromocao() {
