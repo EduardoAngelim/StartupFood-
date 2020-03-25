@@ -57,6 +57,11 @@ namespace StartupFood.Repository.BDD
                         Id = 4,
                         Nome = "X-Egg Bacon",
                         Ingredientes = xEggBacon
+                    },
+                    new Lanche{
+                        Id = 5,
+                        Nome = "Lanche customizado",
+                        Ingredientes = null
                     }
                 };
 

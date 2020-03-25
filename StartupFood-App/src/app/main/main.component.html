@@ -4,18 +4,11 @@
       <div class="mb-5">
         <div *ngFor="let lanche of lanches">
           <div class="custom-control custom-radio text-left ml-5">
-            <input type="radio" class="custom-control-input" id="lanche-{{lanche.id}}" name="opcao_lanche" (click)="calcularPrecoLanche(false, lanche.ingredientes); firstStepButtonNextDisabled = false; pedido.nome = lanche.nome">
+            <input type="radio" class="custom-control-input" id="lanche-{{lanche.id}}" name="opcao_lanche" (click)="calcularPrecoLanche(lanche);">
             <label class="custom-control-label font-weight-bold" for="lanche-{{lanche.id}}">{{lanche.nome}}</label>
             <br>
             <label class="small" *ngFor="let ingrediente of lanche.ingredientes">{{ingrediente.nome}}, &nbsp;</label>
           </div>
-        </div>
-  
-        <div class="custom-control custom-radio text-left ml-5">
-          <input type="radio" class="custom-control-input" id="montar-lanche" name="opcao_lanche" (click)="calcularPrecoLanche(true, null); firstStepButtonNextDisabled = false; pedido.nome = 'Lanche customizado'">
-          <label class="custom-control-label font-weight-bold" for="montar-lanche">Montar lanche</label>
-          <br>
-          <label class="small">Selecione os ingredientes na próxima estapa</label>
         </div>
       </div>
       
@@ -40,13 +33,14 @@
       <h2>Seu pedido</h2>
 
       <ul>
-        <li>Lanche: {{pedido.nome}}</li>
-        <!-- <li>Ingredientes: {{pedido.ingredientes}}</li> -->
-        <li>Valor: R${{pedido.valorFinal.toFixed(2)}}</li>
+        <li>Lanche: {{pedido.lanche.nome}}</li>
+        <li>Ingredientes padrão: {{pedido.lanche.ingredientes}}</li>
+        <li>Ingredientes adicionais: {{pedido.ingredientes}}</li>
+        <li>Valor: R${{pedido.valorTotal.toFixed(2)}}</li>
       </ul>
       
       <button class="btn btn-primary mr-3" type="button" awPreviousStep>Voltar</button>
-      <button class="btn btn-primary mr-3" type="button" (click)="finalizarPedido()">Finalizar pedido</button>
+      <button class="btn btn-primary mr-3" type="button">Finalizar pedido</button>
       <button class="btn btn-danger" type="button">Cancelar pedido</button>
     </aw-wizard-step>
   </aw-wizard>

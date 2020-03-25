@@ -1,7 +1,7 @@
 import { Lanche } from './Lanche';
 import { Ingrediente } from './Ingrediente';
 
-export interface Pedido {
+export class Pedido {
     lanche: Lanche;
     ingredientes: Ingrediente[];
     valorLanche: number;
