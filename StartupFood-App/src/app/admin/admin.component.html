@@ -1,3 +1,28 @@
-<p>
-  admin works!
-</p>
+<div class="container">
+  <h2><b>Alteração dos valores de ingredientes</b></h2>
+  <hr>
+  <div class="row">
+    <div class="col"><b>Ingrediente</b></div>
+    <div class="col"><b>Valor atual</b></div>
+    <div class="col"><b>Novo valor</b></div>
+  </div>
+  <hr>
+  <div class="row mt-3 mb-3" *ngFor="let ingrediente of ingredientes">
+    <div class="col">{{ingrediente.nome}}</div>
+    <div class="col">{{ingrediente.valor}}</div>
+    <div class="col d-flex justify-content-center">
+      <div class="input-group mb-3 w-50">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">R$</span>
+        </div>
+        <input type="number" class="form-control" [(ngModel)]="ingrediente.valor">
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row mt-3">
+    <button class="btn btn-outline-success mr-auto" routerLink="/pedido">Fazer pedido</button>
+    <button class="btn btn-outline-secondary mr-3" routerLink="/painel">Menu principal</button>
+    <button class="btn btn-outline-secondary mr-3" (click)="salvarAlteracoes()">Salvar</button>
+  </div>
+</div>

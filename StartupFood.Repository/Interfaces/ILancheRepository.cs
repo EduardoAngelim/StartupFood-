@@ -7,6 +7,5 @@ namespace StartupFood.Repository.Interfaces
     public interface ILancheRepository
     {
         Task<List<Lanche>> GetAllLancheAsync();
-        Task<Lanche> GetAllLancheAsyncById(int Id);
     }
 }

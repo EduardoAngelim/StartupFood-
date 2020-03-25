@@ -15,11 +15,5 @@ namespace StartupFood.Repository.Repositories
 
             return result;
         }
-        public async Task<Ingrediente> GetAllIngredienteAsyncById(int Id)
-        {
-            var result = await IngredienteTable.Ingredientes();
-
-            return result.FirstOrDefault(x => x.Id == Id);
-        }
     }
 }

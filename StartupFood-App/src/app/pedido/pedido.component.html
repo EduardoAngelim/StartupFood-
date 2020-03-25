@@ -26,30 +26,30 @@
       </div>
               
       <button class="btn btn-primary mr-3" type="button" awPreviousStep>Voltar</button>
-      <button class="btn btn-primary" type="button" (click)="calcularPrecoIngredientes()" [disabled]="secondStepButtonNextDisabled" awNextStep>Próximo</button>
+      <button class="btn btn-primary" type="button" (click)="calcularPrecoIngredientesAdicionais()" [disabled]="secondStepButtonNextDisabled" awNextStep>Próximo</button>
     </aw-wizard-step>
     <aw-wizard-step class="mt-5 text-left" stepTitle="Finalize seu pedido">
       
       <h2>Seu pedido</h2>
 
       <ul>
-        <li>Lanche: {{pedido.lanche.nome}}</li>
+        <li>Lanche: {{pedido.lanche.nome}} - R${{pedido.valorLanche.toFixed(2)}}</li>
         <li *ngIf="pedido.lanche.ingredientes">Ingredientes padrão: 
           <div *ngFor="let ingredienteLanche of pedido.lanche.ingredientes">
             {{ingredienteLanche.nome}} <br>
           </div>
         </li>
-        <li *ngIf="pedido.ingredientes">Ingredientes adicionais:
-          <div *ngFor="let ingredienteAdicional of pedido.ingredientes">
-            {{ingredienteAdicional.nome}}
+        <li *ngIf="pedido.ingredientesAdicionais">Ingredientes adicionais:
+          <div *ngFor="let ingredienteAdicional of pedido.ingredientesAdicionais">
+            {{ingredienteAdicional.nome}} (x{{ingredienteAdicional.quantidade}}) - R${{(ingredienteAdicional.valor * ingredienteAdicional.quantidade).toFixed(2)}}
           </div>
-          </li>
+        </li>
         <li>Valor: R${{pedido.valorTotal.toFixed(2)}}</li>
       </ul>
       
       <button class="btn btn-primary mr-3" type="button" awPreviousStep>Voltar</button>
-      <button class="btn btn-primary mr-3" type="button">Finalizar pedido</button>
-      <button class="btn btn-danger" type="button">Cancelar pedido</button>
+      <button class="btn btn-primary mr-3" type="button" (click)="finalizarPedido()">Finalizar pedido</button>
+      <button class="btn btn-danger" type="button" (click)="cancelarPedido()">Cancelar pedido</button>
     </aw-wizard-step>
   </aw-wizard>
 </div>

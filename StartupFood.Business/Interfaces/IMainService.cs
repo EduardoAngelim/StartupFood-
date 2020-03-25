@@ -7,8 +7,6 @@ namespace StartupFood.Business.Interfaces
     public interface IMainService
     {
         Task<List<Ingrediente>> GetAllIngredienteAsync();
-        Task<Ingrediente> GetIngredienteAsyncById(int Id);
         Task<List<Lanche>> GetAllLancheAsync();
-        Task<Lanche> GetLancheAsyncById(int Id);
     }
 }

@@ -9,6 +9,7 @@ import { Ingrediente } from '../models/Ingrediente';
 export class IngredienteService {
 
   baseUrl = 'https://localhost:5001/api/ingredientes';
+  ingredientesAtualizados: Ingrediente[];
 
   constructor(private http: HttpClient) { }
 
@@ -16,7 +17,11 @@ export class IngredienteService {
     return this.http.get<Ingrediente[]>(this.baseUrl);
   }
 
-  getIngrediente(id: number): Observable<Ingrediente> {
-    return this.http.get<Ingrediente>(`${this.baseUrl}/${id}`);
+  getIngresdientesAtualizados() {
+    return this.ingredientesAtualizados;
+  }
+
+  updateValoresIngredientes(ingredientes: Ingrediente[]) {
+    this.ingredientesAtualizados = ingredientes;
   }
 }

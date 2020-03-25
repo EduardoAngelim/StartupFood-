@@ -3,7 +3,7 @@ import { Ingrediente } from './Ingrediente';
 
 export class Pedido {
     lanche: Lanche;
-    ingredientes: Ingrediente[];
+    ingredientesAdicionais: Ingrediente[];
     valorLanche: number;
     valorIngredientes: number;
     valorTotal: number;

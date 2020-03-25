@@ -6,44 +6,74 @@ import { LancheService } from '../services/lanche.service';
 import { Lanche } from '../models/Lanche';
 import { Ingrediente } from '../models/Ingrediente';
 import { Pedido } from '../models/Pedido';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  selector: 'app-pedido',
+  templateUrl: './pedido.component.html',
+  styleUrls: ['./pedido.component.css']
 })
-export class MainComponent implements OnInit {
+export class PedidoComponent implements OnInit {
 
   firstStepButtonNextDisabled: boolean;
   secondStepButtonNextDisabled: boolean;
   ingredientesTemp: any;
   lanches: Lanche[];
   ingredientes: Ingrediente[];
+  ingredientesAtualizados: Ingrediente[];
   pedido: Pedido;
 
-  constructor(private ingredienteService: IngredienteService, private lancheService: LancheService) { }
+  constructor(private ingredienteService: IngredienteService, private lancheService: LancheService, private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.getLanches();
-    this.getIngredientes();
+    this.getData();
     this.firstStepButtonNextDisabled = true;
     this.pedido = new Pedido();
     this.pedido.lanche = new Lanche();
+    this.pedido.ingredientesAdicionais = new Array<Ingrediente>();
     this.pedido.valorTotal = 0;
+    this.pedido.valorLanche = 0;
+    this.pedido.valorIngredientes = 0;
   }
 
-  getLanches() {
-    this.lancheService.getLanches().subscribe((_lanches: Lanche[]) => {
-     this.lanches = _lanches;
+  getData() {
+    this.lancheService.getLanches().subscribe((lanches: Lanche[]) => {
+
+      this.lanches = lanches;
+
+      this.ingredientesAtualizados = this.ingredienteService.getIngresdientesAtualizados();
+
+      if ( this.ingredientesAtualizados != null) {
+
+        this.ingredientes = this.ingredientesAtualizados;
+
+        this.lanches.forEach(lanche => {
+          if (!lanche.nome.includes('Lanche customizado')) {
+            lanche.ingredientes.forEach(ingrediente => {
+              this.ingredientes.forEach(ing => {
+                if (ingrediente.id === ing.id) {
+                  ingrediente.valor = ing.valor;
+                }
+              });
+            });
+          }
+        });
+      } else {
+        this.ingredienteService.getIngredientes().subscribe((ingredientes: Ingrediente[]) => {
+          this.ingredientes = ingredientes;
+          }, error => {
+            console.log(error);
+          });
+      }
     }, error => {
       console.log(error);
     });
   }
 
   getIngredientes() {
-    this.ingredienteService.getIngredientes().subscribe((_ingredientes: Ingrediente[]) => {
-     this.ingredientes = _ingredientes;
+    this.ingredienteService.getIngredientes().subscribe((ingredientes: Ingrediente[]) => {
+     this.ingredientes = ingredientes;
     }, error => {
       console.log(error);
     });
@@ -52,7 +82,6 @@ export class MainComponent implements OnInit {
   calcularPrecoLanche(lanche: Lanche) {
 
     this.pedido.lanche = lanche;
-    this.pedido.ingredientes = lanche.ingredientes;
     this.ingredientesTemp = lanche.ingredientes;
     this.pedido.valorLanche = 0;
 
@@ -70,20 +99,24 @@ export class MainComponent implements OnInit {
     }
 
     this.firstStepButtonNextDisabled = false;
-    
-    if (this.pedido.lanche.nome.includes('Lanche customizado') && !this.pedido.ingredientes) {
+
+    if (this.pedido.lanche.nome.includes('Lanche customizado') && !this.pedido.ingredientesAdicionais) {
       this.secondStepButtonNextDisabled = true;
     } else {
       this.secondStepButtonNextDisabled = false;
     }
   }
 
-  calcularPrecoIngredientes() {
+  calcularPrecoIngredientesAdicionais() {
 
     this.pedido.valorIngredientes = 0;
+    this.pedido.ingredientesAdicionais.splice(0, this.pedido.ingredientesAdicionais.length);
 
     this.ingredientes.forEach(ingrediente => {
-      this.pedido.valorIngredientes += (ingrediente.valor * ingrediente.quantidade);
+      if (ingrediente.quantidade > 0) {
+        this.pedido.ingredientesAdicionais.push(ingrediente);
+        this.pedido.valorIngredientes += (ingrediente.valor * ingrediente.quantidade);
+      }
     });
 
     this.pedido.valorTotal = this.pedido.valorLanche + this.pedido.valorIngredientes;
@@ -107,12 +140,21 @@ export class MainComponent implements OnInit {
     }
   }
 
+
+  finalizarPedido() {
+    this.toastr.success('Pedido finalizado com sucesso. Bom apetite!', 'Operação concluída!');
+  }
+
+  cancelarPedido() {
+    this.toastr.warning('Pedido cancelado com sucesso!', 'Operação abortada!');
+  }
+
   verificarPromocao() {
 
-    var desconto = 0;
+    let desconto = 0;
 
-    var contemBacon = false;
-    var contemAlface = false;
+    let contemBacon = false;
+    let contemAlface = false;
 
     this.ingredientes.forEach(ingrediente => {
 
@@ -127,7 +169,7 @@ export class MainComponent implements OnInit {
       // Regra promoção "Muita Carne"
       if (ingrediente.nome.includes('carne') && ingrediente.quantidade >= 3) {
 
-        var qtdCarnes = ingrediente.quantidade;
+        let qtdCarnes = ingrediente.quantidade;
 
         // Verifica se a opção escolhida é o lanche customizado.
         // Se não, acrescenta Hambúrger de Carne à conta.
@@ -141,7 +183,7 @@ export class MainComponent implements OnInit {
 
           desconto = 0;
         } else {
-          var quantidadeFinal = qtdCarnes - (qtdCarnes % 3);
+          const quantidadeFinal = qtdCarnes - (qtdCarnes % 3);
           desconto = (quantidadeFinal * ingrediente.valor) - (((quantidadeFinal * 2) / 3) * ingrediente.valor);
           this.pedido.valorTotal = this.pedido.valorTotal - desconto;
 
@@ -152,10 +194,10 @@ export class MainComponent implements OnInit {
       // Regra promoção "Muito Queijo"
       if (ingrediente.nome.includes('Queijo') && ingrediente.quantidade >= 3) {
 
-        var qtdQueijos = ingrediente.quantidade;
+        let qtdQueijos = ingrediente.quantidade;
 
         // Verifica se a opção escolhida é o lanche customizado.
-        // Se não, acrescenta Hambúrger de Queijo à conta.
+        // Se não, acrescenta Queijo à conta.
         if (!this.pedido.lanche.nome.includes('Lanche customizado')) {
           qtdQueijos++;
         }
@@ -166,7 +208,7 @@ export class MainComponent implements OnInit {
 
           desconto = 0;
         } else {
-          var quantidadeFinal = qtdQueijos - (qtdQueijos % 3);
+          const quantidadeFinal = qtdQueijos - (qtdQueijos % 3);
           desconto = (quantidadeFinal * ingrediente.valor) - (((quantidadeFinal * 2) / 3) * ingrediente.valor);
           this.pedido.valorTotal = this.pedido.valorTotal - desconto;
 

@@ -18,28 +18,17 @@ namespace StartupFood.Business.Services
             this.IngredienteRepository = IngredienteRepository;
             this.LancheRepository = LancheRepository;
         }
-
+        
+        
         public async Task<List<Ingrediente>> GetAllIngredienteAsync()
         {
             var result = await IngredienteRepository.GetAllIngredienteAsync();
 
             return result;
         }
-        public async Task<Ingrediente> GetIngredienteAsyncById(int Id)
-        {
-            var result = await IngredienteRepository.GetAllIngredienteAsyncById(Id);
-
-            return result;
-        }
         public async Task<List<Lanche>> GetAllLancheAsync()
         {
             var result = await LancheRepository.GetAllLancheAsync();
-
-            return result;
-        }
-        public async Task<Lanche> GetLancheAsyncById(int Id)
-        {
-            var result = await LancheRepository.GetAllLancheAsyncById(Id);
 
             return result;
         }

@@ -15,11 +15,5 @@ namespace StartupFood.Repository.Repositories
 
             return result;
         }
-        public async Task<Lanche> GetAllLancheAsyncById(int Id)
-        {
-            var result = await LancheTable.Lanches();
-
-            return result.FirstOrDefault(x => x.Id == Id);
-        }
     }
 }
