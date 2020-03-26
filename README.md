@@ -31,4 +31,5 @@ Sistema de pedido de lanche
   - As alterações nos valores dos ingredientes são simuladas no Frontend para que seja possível
     o usuário verificar comportamento do sistema com valores diferentes dos valores padrão.
   - O sistema segue o seguinte fluxograma para a função de fazer um pedido:
+  
   ![Fluxograma](https://user-images.githubusercontent.com/40437558/77694804-71487c80-6f89-11ea-8245-250c69417a1d.jpg)
