@@ -31,6 +31,7 @@ export class PedidoComponent implements OnInit {
     this.firstStepButtonNextDisabled = true;
     this.pedido = new Pedido();
     this.pedido.lanche = new Lanche();
+    this.pedido.lanche.ingredientes = new Array<Ingrediente>();
     this.pedido.ingredientesAdicionais = new Array<Ingrediente>();
     this.pedido.valorTotal = 0;
     this.pedido.valorLanche = 0;
@@ -100,8 +101,9 @@ export class PedidoComponent implements OnInit {
 
     this.firstStepButtonNextDisabled = false;
 
-    if (this.pedido.lanche.nome.includes('Lanche customizado') && !this.pedido.ingredientesAdicionais) {
+    if (this.pedido.lanche.nome.includes('customizado') && this.pedido.ingredientesAdicionais.length === 0) {
       this.secondStepButtonNextDisabled = true;
+      alert('disabled');
     } else {
       this.secondStepButtonNextDisabled = false;
     }

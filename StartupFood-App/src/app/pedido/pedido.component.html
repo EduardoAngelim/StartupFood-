@@ -32,19 +32,19 @@
       
       <h2>Seu pedido</h2>
 
-      <ul>
-        <li>Lanche: {{pedido.lanche.nome}} - R${{pedido.valorLanche.toFixed(2)}}</li>
-        <li *ngIf="pedido.lanche.ingredientes">Ingredientes padrão: 
+      <ul style="list-style-type: none;">
+        <li class="mb-3"><b>Lanche:</b> {{pedido.lanche.nome}} - R${{pedido.valorLanche.toFixed(2)}}</li>
+        <li class="mb-3" *ngIf="pedido.lanche.ingredientes && pedido.lanche.ingredientes.length > 0"><b>Ingredientes padrão:</b> 
           <div *ngFor="let ingredienteLanche of pedido.lanche.ingredientes">
-            {{ingredienteLanche.nome}} <br>
+             - {{ingredienteLanche.nome}} <br>
           </div>
         </li>
-        <li *ngIf="pedido.ingredientesAdicionais">Ingredientes adicionais:
+        <li class="mb-3" *ngIf="pedido.ingredientesAdicionais.length > 0"><b>Ingredientes adicionais:</b>
           <div *ngFor="let ingredienteAdicional of pedido.ingredientesAdicionais">
-            {{ingredienteAdicional.nome}} (x{{ingredienteAdicional.quantidade}}) - R${{(ingredienteAdicional.valor * ingredienteAdicional.quantidade).toFixed(2)}}
+             - {{ingredienteAdicional.nome}} (x{{ingredienteAdicional.quantidade}}) - R${{(ingredienteAdicional.valor * ingredienteAdicional.quantidade).toFixed(2)}}
           </div>
         </li>
-        <li>Valor: R${{pedido.valorTotal.toFixed(2)}}</li>
+        <li class="mb-3"><b>Valor total:</b> R${{pedido.valorTotal.toFixed(2)}}</li>
       </ul>
       
       <button class="btn btn-primary mr-3" type="button" awPreviousStep>Voltar</button>

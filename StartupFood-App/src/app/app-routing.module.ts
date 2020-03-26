@@ -8,7 +8,8 @@ import { PainelComponent } from './painel/painel.component';
 const routes: Routes = [
   { path: 'painel', component: PainelComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'pedido', component: PedidoComponent }
+  { path: 'pedido', component: PedidoComponent },
+  { path: '', redirectTo: '/painel', pathMatch: 'full' }
 ];
 
 @NgModule({
