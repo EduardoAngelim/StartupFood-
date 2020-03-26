@@ -7,10 +7,10 @@ Sistema de pedido de lanche
 
  - Abra o promp de comando do windows
  - Entre na pasta do projeto StartupFood.API
- - Execute o comando dotnet run
+ - Execute o comando <i>dotnet run</i>
 
 ###### Frontend - Angular CLI 9.0.7
 
  - Abra o promp de comando do windows
  - Entre na pasta do projeto StartupFood-App
- - Execute o comando ng serve -o
+ - Execute o comando <i>ng serve -o</i>
