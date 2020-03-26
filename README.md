@@ -17,19 +17,21 @@ Sistema de pedido de lanche
 
  ## Justificativa de design de código
 
-  - Projeto divido em 4 camadas para melhor organização do mesmo: 
-        - StartupFood-App: Frontend
-        - StartupFood.API: API do sistema
-        - StartupFood.Business: Camada de negócios
-        - StartupFood.Repository: Camada de dados
+  - Projeto divido em 4 camadas para melhor organização do mesmo:
+        <ul style="list-style-type: none">
+        <li>- StartupFood-App: Frontend</li>
+        <li>- StartupFood.API: API do sistema</li>
+        <li>- StartupFood.Business: Camada de negócios</li>
+        <li>- StartupFood.Repository: Camada de dados</li>
+        </ul>
   - Os dados apresentados no sistema são simulados no projeto StartupFood.Repository sendo:
-        <ul>
-        <li>./BDD/LancheTable.cs: Classe responsável por simular a tabela de lanches do BDD.</li>
-        <li>./BDD/Ingrediente.cs: Classe responsável por simular a tabela de ingredientes do BDD.</li>
+        <ul style="list-style-type: none">
+        <li> - ./BDD/LancheTable.cs: Classe responsável por simular a tabela de lanches do BDD.</li>
+        <li> - ./BDD/Ingrediente.cs: Classe responsável por simular a tabela de ingredientes do BDD.</li>
         </ul>
   - Os dados são simulados desta forma uma vez que os requisitos do teste dizem para não persistir od dados
   - As alterações nos valores dos ingredientes são simuladas no Frontend para que seja possível
     o usuário verificar comportamento do sistema com valores diferentes dos valores padrão.
   - O sistema segue o seguinte fluxograma para a função de fazer um pedido:
-  
+
   ![Fluxograma](https://user-images.githubusercontent.com/40437558/77694804-71487c80-6f89-11ea-8245-250c69417a1d.jpg)
