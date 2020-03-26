@@ -23,8 +23,10 @@ Sistema de pedido de lanche
         - StartupFood.Business: Camada de negócios
         - StartupFood.Repository: Camada de dados
   - Os dados apresentados no sistema são simulados no projeto StartupFood.Repository sendo:
-        - ./BDD/LancheTable.cs: Classe responsável por simular a tabela de lanches do BDD.
-        - ./BDD/Ingrediente.cs: Classe responsável por simular a tabela de ingredientes do BDD.
+        <ul>
+        <li>./BDD/LancheTable.cs: Classe responsável por simular a tabela de lanches do BDD.</li>
+        <li>./BDD/Ingrediente.cs: Classe responsável por simular a tabela de ingredientes do BDD.</li>
+        </ul>
   - Os dados são simulados desta forma uma vez que os requisitos do teste dizem para não persistir od dados
   - As alterações nos valores dos ingredientes são simuladas no Frontend para que seja possível
     o usuário verificar comportamento do sistema com valores diferentes dos valores padrão.
