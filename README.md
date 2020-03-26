@@ -15,7 +15,7 @@ Sistema de pedido de lanche
  - Entre na pasta do projeto StartupFood-App
  - Execute o comando <i>ng serve -o</i>
 
- ## Justificativa de design de código
+ ## Justificativa de design do código
 
   - Projeto divido em 4 camadas para melhor organização do mesmo:
         <ul>
