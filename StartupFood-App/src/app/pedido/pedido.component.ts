@@ -103,7 +103,6 @@ export class PedidoComponent implements OnInit {
 
     if (this.pedido.lanche.nome.includes('customizado') && this.pedido.ingredientesAdicionais.length === 0) {
       this.secondStepButtonNextDisabled = true;
-      alert('disabled');
     } else {
       this.secondStepButtonNextDisabled = false;
     }
