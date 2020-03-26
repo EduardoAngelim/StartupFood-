@@ -46,10 +46,11 @@
         </li>
         <li class="mb-3"><b>Valor total:</b> R${{pedido.valorTotal.toFixed(2)}}</li>
       </ul>
-      
-      <button class="btn btn-primary mr-3" type="button" awPreviousStep>Voltar</button>
-      <button class="btn btn-primary mr-3" type="button" (click)="finalizarPedido()">Finalizar pedido</button>
-      <button class="btn btn-danger" type="button" (click)="cancelarPedido()">Cancelar pedido</button>
+      <div class="row">
+        <button class="btn btn-primary mr-3" type="button" awPreviousStep>Voltar</button>
+        <button class="btn btn-primary mr-auto" type="button" routerLink="/painel" (click)="finalizarPedido()">Finalizar pedido</button>
+        <button class="btn btn-danger" type="button" routerLink="/painel" (click)="cancelarPedido()">Cancelar pedido</button>
+      </div>
     </aw-wizard-step>
   </aw-wizard>
 </div>
